@@ -1,0 +1,5 @@
+{
+    "env": {
+        "MONGODB_ATLAS_PW": "12345"
+    }   
+}
