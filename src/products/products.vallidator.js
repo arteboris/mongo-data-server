@@ -10,16 +10,13 @@ class ProductsVallidator {
     async _sendProducts(req, res, next){
         const url = req.url;
         const nameQuery = req.query.name;
-
         if(!url.includes('?')){
             return next();
         } else if(url.includes('?') && nameQuery) {
             const name = nameQuery.split(",");
-
             if(name.length !== 1 ) {
                 return res.status(400).json('SmartBin: Invalid URL');
             };
-
             return next();
         } else {
             return res.status(400).json('SmartBin: Invalid URL');
@@ -67,6 +64,7 @@ class ProductsVallidator {
         .withOptional("price", validator.isNumber())
         .withOptional("currency", validator.isString())
         .withOptional("categories", validator.isArray(validator.isString(), {min: 1}))
+        .withOptional("likes", validator.isNumber());
 
         validator.run(updatedProductIdRules, req.body, (errCount, errors) => {
             if(errCount) {

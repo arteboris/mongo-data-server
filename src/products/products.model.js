@@ -17,6 +17,7 @@ const productSchema = new Schema({
             message: 'there must be at least one category'
         }
     },
+    likes: Number,
 },
 { 
     versionKey: false,
@@ -32,10 +33,10 @@ productSchema.statics.deleteProductId = deleteProductId;
 
 async function sendProducts(name) {
     if(name) {
-       return this.findOne({name});
+       return await this.findOne({name});
     };
 
-    return this.find();
+    return await this.find();
 };
 
 async function sendProductId(id) {

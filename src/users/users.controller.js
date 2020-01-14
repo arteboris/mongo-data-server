@@ -91,7 +91,7 @@ class UsersController {
            const updateUser = await UsersModel.updateUserId(id, bodyUser);
 
            if(!updateUser) {
-            return res.status(404).json({'status': 'faield', 'user': 'no user'});
+            return res.status(404).json({'status': 'faield', 'user': 'no user update or no products for update'});
            };
 
             return res.status(200).json({'status': 'success updated', 'userUpdated': updateUser});

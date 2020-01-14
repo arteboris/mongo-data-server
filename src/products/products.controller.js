@@ -10,7 +10,7 @@ class ProductsController {
     async _sendProducts(req, res, next){
         const name = req.query.name;
         try{
-           const products = productsModel.sendProducts(name);
+           const products = await productsModel.sendProducts(name);
 
            if(!products) {
                return res.status(404).json({'status': 'failed', 'products': 'no products'})
@@ -54,7 +54,7 @@ class ProductsController {
             const product = await productsModel.createProduct(body);
 
             await product.save((err, data) => {
-                if (err) throw err;
+                if (err) return res.status(400).json(err);
 
                 return res.status(201).json({'status': 'success', 'product': data});
             });
@@ -68,8 +68,11 @@ class ProductsController {
     };
 
     async _updatedProductId(req, res, next){
-        const id = req.param.id;
-        const body = req.body;
+        const id = req.params.id;
+        const body = {
+            ...req.body,
+            'updatedAt': Date.now(),
+        };
         try{
             const updateProduct = await productsModel.updatedProductId(id, body);
 

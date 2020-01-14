@@ -8,9 +8,18 @@ const userSchema = new Schema({
     name: { type: String, required: true},
     email: { type: String, required: true, unique: true},
     tel: { type: Number, require: true},
-    favoriteProducts: Array,
-    viewedProducts: Array, 
-    orders: Array,
+    favoriteProducts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'productsModel',
+    }],
+    viewedProducts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+    }], 
+    orders: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+    }],
 },
 { 
     versionKey: false   // set to false then it wont create in mongodb
@@ -69,6 +78,7 @@ async function updateUserId(id, bodyUser) {
                 {new: true}
             );
     } catch(err) {
+        console.log(err);
         return null;
     };
 };

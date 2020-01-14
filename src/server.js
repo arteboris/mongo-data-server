@@ -7,6 +7,7 @@ const mainRouter = require('./main/main');
 const carRouter = require('./car/car');
 const usersRouter = require('./users/users.router');
 const productsRouter = require('./products/products.router');
+const ordersRouter = require('./orders/orders.router');
 
 init();
 
@@ -31,6 +32,7 @@ function initRouters(app){
     app.use('/car', carRouter);
     app.use('/users', usersRouter);
     app.use('/products', productsRouter);
+    app.use('/orders', ordersRouter);
     app.use('/*', (req, res, next) => {
         res.status(404).json('SmartBin: Invalid URL')
       });
