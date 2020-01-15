@@ -8,8 +8,9 @@ class OrdersController {
     };
 
     async _sendOrders(req, res, next){
+        const creator = req.query.creator;
         try {
-            const orders = await ordersModel.sendOrders();
+            const orders = await ordersModel.sendOrders(creator);
             if(!orders){
                 return res.status(404).json({'status': 'failed', 'orders': 'no orders'});
             };
@@ -66,12 +67,11 @@ class OrdersController {
         };
         try{
             const updatedOrder = await ordersModel.updatedOrderId(id, body);
-            if(err){
-                return res.status(404).json({'status': 'failed', 'order': err});
-            };
+            if(!updatedOrder){
+                return res.status(404).json({'status': 'failed', 'order': 'no such order'});
+            }
             return res.status(200).json({'status': 'success', 'updated order': updatedOrder});
         } catch(err){
-            // delete err.stack;
             return res.status(404).json(err);
         };
     };

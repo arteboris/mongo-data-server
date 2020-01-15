@@ -9,11 +9,19 @@ class OrdersVallidator {
 
     async _sendOrders(req, res, next){
         const url = req.url;
-        if(url.includes('?')){
-            return res.status(400).json('SmartBin: Invalid URL');
-        };
-        return next();
-    };
+        const creatorQuery = req.query.creator;
+
+        if(!url.includes('?')){
+            return next();
+        } else if(url.includes('?') && creatorQuery){
+            const creator = creatorQuery.split(","); 
+                if (creator.length !== 1) {
+                    return res.status(400).json('SmartBin: Invalid URL');
+                };
+                return next();
+            };
+        return res.status(400).json('SmartBin: Invalid URL');
+    }; 
 
     get createOrder() {
         return this._createOrder.bind(this);
